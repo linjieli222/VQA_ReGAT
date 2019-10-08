@@ -2,9 +2,9 @@
 
 This repository is the implementation of [Realtion-aware Graph Attention Network for Visual Question Answering](https://arxiv.org/abs/1903.12314).
 
-This repository is based on and inspired by @hengyuan-hu's [work](https://github.com/hengyuan-hu/bottom-up-attention-vqa) and @Jin-Hwa Kim's [work](https://github.com/jnhwkim/ban-vqa). We sincerely thank for their sharing of the codes.
-
 ![Overview of ReGAT](misc/regat_overview.jpg)
+
+This repository is based on and inspired by @hengyuan-hu's [work](https://github.com/hengyuan-hu/bottom-up-attention-vqa) and @Jin-Hwa Kim's [work](https://github.com/jnhwkim/ban-vqa). We sincerely thank for their sharing of the codes.
 
 ## Prerequisites
 
