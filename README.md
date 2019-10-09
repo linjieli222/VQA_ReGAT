@@ -1,6 +1,6 @@
-# Realtion-aware Graph Attention Network for Visual Question Answering
+# Relation-aware Graph Attention Network for Visual Question Answering
 
-This repository is the implementation of [Realtion-aware Graph Attention Network for Visual Question Answering](https://arxiv.org/abs/1903.12314).
+This repository is the implementation of [Relation-aware Graph Attention Network for Visual Question Answering](https://arxiv.org/abs/1903.12314).
 
 ![Overview of ReGAT](misc/regat_overview.jpg)
 
