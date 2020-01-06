@@ -66,8 +66,9 @@ class GraphSelfAttentionLayer(nn.Module):
         """
         batch_size = roi_feat.size(0)
         num_rois = roi_feat.size(1)
+        nongt_dim = self.nongt_dim if self.nongt_dim < num_rois else num_rois
         # [batch_size,nongt_dim, feat_dim]
-        nongt_roi_feat = roi_feat[:, :self.nongt_dim, :]
+        nongt_roi_feat = roi_feat[:, :nongt_dim, :]
 
         # [batch_size,num_rois, self.dim[0] = feat_dim]
         q_data = self.query(roi_feat)
@@ -83,7 +84,7 @@ class GraphSelfAttentionLayer(nn.Module):
         k_data = self.key(nongt_roi_feat)
 
         # [batch_size,nongt_dim, num_heads, feat_dim /num_heads]
-        k_data_batch = k_data.view(batch_size, self.nongt_dim, self.num_heads,
+        k_data_batch = k_data.view(batch_size, nongt_dim, self.num_heads,
                                    self.dim_group[1])
 
         # [batch_size,num_heads, nongt_dim, feat_dim /num_heads]
@@ -114,7 +115,7 @@ class GraphSelfAttentionLayer(nn.Module):
 
             # aff_weight, [batch_size,num_rois, nongt_dim, fc_dim]
             aff_weight = position_feat_1_relu.view(
-                (batch_size, -1, self.nongt_dim, self.fc_dim))
+                (batch_size, -1, nongt_dim, self.fc_dim))
 
             # aff_weight, [batch_size,num_rois, fc_dim, nongt_dim]
             aff_weight = torch.transpose(aff_weight, 2, 3)
@@ -148,7 +149,7 @@ class GraphSelfAttentionLayer(nn.Module):
         aff_softmax = nn.functional.softmax(weighted_aff, 3)
 
         # aff_softmax_reshape, [batch_size, num_rois*fc_dim, nongt_dim]
-        aff_softmax_reshape = aff_softmax.view((batch_size, -1, self.nongt_dim))
+        aff_softmax_reshape = aff_softmax.view((batch_size, -1, nongt_dim))
 
         # output_t, [batch_size, num_rois * fc_dim, feat_dim]
         output_t = torch.matmul(aff_softmax_reshape, v_data)
